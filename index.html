@@ -1,0 +1,144 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030816"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg">
+<title>VIERNES</title>
+<style>
+:root{--bg:#030816;--p:#081a3a;--l:#1a4f9c;--c:#2cc4ff;--t:#d9ecff;--m:#7fa3cc;--g:0 0 16px rgba(44,196,255,.45)}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--bg);color:var(--t);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+#app{max-width:480px;height:100%;margin:auto;position:relative;overflow:hidden;background:radial-gradient(120% 55% at 50% 0,#0b2d66 0,transparent 62%),var(--bg)}
+.screen{position:absolute;inset:0 0 66px;overflow-y:auto;padding:16px;display:none}
+.screen.on{display:block}#s-chat.on{display:flex;flex-direction:column}
+h1{font-size:22px;letter-spacing:.32em;text-align:center;font-weight:600;text-shadow:var(--g)}
+h2{font-size:20px;margin-bottom:2px}.sub{color:var(--m);font-size:13px;margin-bottom:14px}
+.card,.tile,.tool{background:linear-gradient(160deg,#0a2150,#06122b);border:1px solid var(--l);border-radius:14px;padding:12px 14px;color:var(--t);text-align:left;font:inherit;width:100%}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{grid-template-columns:repeat(3,1fr)}
+.tile{text-align:center;cursor:pointer}.tile b{display:block;font-size:14px}.tile small{color:var(--m);font-size:12px}.tile span{font-size:26px;display:block}
+.list{display:grid;gap:10px}.tool{display:flex;gap:12px;align-items:center;cursor:pointer}.tool span{font-size:24px}.tool small{color:var(--m);display:block;font-size:12px}
+.orb{width:190px;height:190px;margin:14px auto;position:relative;display:grid;place-items:center}
+.orb i{position:absolute;inset:0;border-radius:50%;border:2px solid var(--c);border-top-color:transparent;border-bottom-color:transparent;box-shadow:var(--g);animation:sp 14s linear infinite}
+.orb i:nth-child(2){inset:18px;animation-duration:9s;animation-direction:reverse;opacity:.7}
+.orb i:nth-child(3){inset:38px;animation-duration:22s;border-style:dashed;opacity:.5}
+.orb svg{width:74px;color:var(--c);filter:drop-shadow(0 0 10px var(--c))}
+@keyframes sp{to{transform:rotate(360deg)}}
+#nav{position:absolute;left:0;right:0;bottom:0;height:66px;display:grid;grid-template-columns:repeat(5,1fr);align-items:center;background:#040d22ee;border-top:1px solid var(--l);backdrop-filter:blur(8px);z-index:5}
+#nav button{background:none;border:0;color:var(--m);font:11px system-ui;display:grid;gap:2px;justify-items:center}
+#nav button.on{color:var(--c)}#nav button span{font-size:20px}
+#nav .mic{width:54px;height:54px;border-radius:50%;margin:auto;background:radial-gradient(#2cc4ff,#0a5cc0);color:#fff;box-shadow:var(--g);font-size:22px;display:grid;place-items:center;border:0}
+#msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-bottom:10px}
+.b{max-width:86%;padding:10px 13px;border-radius:14px;border:1px solid var(--l);white-space:pre-wrap;word-break:break-word}
+.b.u{align-self:flex-end;background:#0d3b86}.b.a{align-self:flex-start;background:#071a3d}
+.bar{display:flex;gap:8px;margin-top:8px}
+input,textarea,select{width:100%;background:#061633;border:1px solid var(--l);border-radius:12px;color:var(--t);padding:11px 13px;font:inherit}
+button.go{background:linear-gradient(#1f8fe8,#0b5cc0);border:0;border-radius:12px;color:#fff;padding:0 16px;font:inherit;min-height:44px;box-shadow:var(--g)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+label.sw{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #12306a}
+.back{background:none;border:0;color:var(--c);font:inherit;margin-bottom:8px}
+#splash{position:absolute;inset:0;z-index:20;background:var(--bg);display:grid;place-content:center;text-align:center;gap:6px;transition:opacity .6s}
+#splash .bar2{width:160px;height:3px;background:#12306a;margin:18px auto 0;border-radius:3px;overflow:hidden}#splash .bar2 i{display:block;height:100%;width:0;background:var(--c);box-shadow:var(--g);animation:ld 1.6s forwards}
+@keyframes ld{to{width:100%}}
+.wave{display:flex;gap:4px;justify-content:center;align-items:center;height:60px}.wave i{width:4px;height:10px;background:var(--c);border-radius:3px}
+.listening .wave i{animation:w .7s ease-in-out infinite alternate}.wave i:nth-child(odd){animation-delay:.25s!important}
+@keyframes w{to{height:52px}}
+#toast{position:absolute;left:16px;right:16px;top:12px;z-index:30;background:#0b2d66;border:1px solid var(--c);border-radius:12px;padding:10px 14px;display:none}
+.calc{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.calc button{padding:16px 0;font-size:18px;background:#0a2150;border:1px solid var(--l);color:var(--t);border-radius:12px}
+.out{margin-top:12px;white-space:pre-wrap}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<div id="app">
+<div id="toast"></div>
+<div id="splash"><svg id="sv" viewBox="0 0 100 100" width="90" style="margin:auto;color:#2cc4ff"></svg><h1>VIERNES</h1><div class="sub">Tu asistente de IA personal</div><div class="bar2"><i></i></div></div>
+<section class="screen on" id="s-home"></section>
+<section class="screen" id="s-chat"><h2>Chat con VIERNES</h2><div class="sub" id="mname"></div><div id="msgs"></div>
+<div class="bar"><input id="inp" placeholder="Escribe un mensaje…" enterkeyhint="send"><button class="go" id="snd">Enviar</button></div></section>
+<section class="screen" id="s-voice" style="text-align:center"><div class="orb"><i></i><i></i><i></i><svg class="lg" viewBox="0 0 100 100"></svg></div>
+<div class="wave" id="wave"></div><h2 id="vtxt">Toca el micrófono</h2><div class="sub" id="vsub">Habla y VIERNES responde en voz alta</div><button class="go" id="vbtn" style="margin-top:10px;padding:0 28px">🎙️ Hablar</button></section>
+<section class="screen" id="s-topic"></section><section class="screen" id="s-tools"></section><section class="screen" id="s-tool"></section>
+<section class="screen" id="s-settings"></section><section class="screen" id="s-about"></section>
+<nav id="nav"><button data-go="home" class="on"><span>🏠</span>Inicio</button><button data-go="chat"><span>💬</span>Chat</button>
+<button class="mic" id="mic">🎙️</button><button data-go="tools"><span>🧰</span>Herramientas</button><button data-go="settings"><span>⚙️</span>Ajustes</button></nav>
+</div>
+<script>
+const $=s=>document.querySelector(s),LOGO='<path d="M12 20h22l16 38 16-38h22L56 84H44z" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round"/><path d="M34 20l16 38 16-38" fill="none" stroke="currentColor" stroke-width="3" opacity=".6"/>';
+document.querySelectorAll('.lg,#sv').forEach(e=>e.innerHTML=LOGO);
+let S={name:'',key:'',model:'gemini-2.5-flash',voice:true,mem:true,memories:[],notes:[],chat:[]};
+try{Object.assign(S,JSON.parse(localStorage.vz||'{}'))}catch(e){}
+const save=()=>{try{localStorage.vz=JSON.stringify(S)}catch(e){}};
+const esc=t=>t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display='none',3500)}
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id=='s-'+id));
+ document.querySelectorAll('#nav [data-go]').forEach(b=>b.classList.toggle('on',b.dataset.go==id));
+ ({home:home,tools:tools,settings:settings,about:about,chat:chatView})[id]?.();$('#s-'+id).scrollTop=0}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+const TOP={Estudio:['📚','Aprende, explora, descubre',[['Resúmenes y tareas','Notas y resúmenes'],['Explicaciones','Temas difíciles, fácil'],['Traducciones','Idiomas y textos'],['Preguntas','Resuelve tus dudas'],['Historia','Hechos y curiosidades'],['Ciencia','Biología, física, química']]],
+Juegos:['🎮','Diversión sin límites',[['Among Us','Juega y diviértete'],['Minecraft','Ideas y mundos'],['Roblox','Trucos y consejos'],['FC Mobile','Estrategias y guías']]],
+Deportes:['⚽','Mejora tu juego',[['Fútbol','Técnica y táctica'],['Baloncesto','Tiro y defensa'],['Entrenamiento','Rutinas y resistencia'],['Plan semanal','Organiza tu semana']]],
+Coches:['🚗','Todo sobre motores',[['Cómo funciona','Motor y mecánica'],['Mantenimiento','Cuidados básicos'],['Elegir coche','Compara opciones'],['Curiosidades','Datos y récords']]],
+'Vida diaria':['🧭','Organiza tu día',[['Rutina','Mañana y noche'],['Cocina rápida','Recetas fáciles'],['Ahorro','Gasta mejor'],['Hábitos','Constancia']]]};
+function home(){$('#s-home').innerHTML=`<h1>VIERNES</h1><div class="card" style="margin-top:14px">Hola, ${esc(S.name||'amigo')} 👋<br><small style="color:var(--m)">¿En qué puedo ayudarte hoy?</small></div>
+<div class="orb"><i></i><i></i><i></i><svg viewBox="0 0 100 100">${LOGO}</svg></div><div class="grid grid3">
+<button class="tile" data-t="chat"><span>💬</span><b>Chat</b></button>${Object.keys(TOP).map(k=>`<button class="tile" data-t="${k}"><span>${TOP[k][0]}</span><b>${k}</b></button>`).join('')}</div>`;
+ document.querySelectorAll('#s-home .tile').forEach(b=>b.onclick=()=>b.dataset.t=='chat'?go('chat'):topic(b.dataset.t))}
+function topic(k){const[i,s,l]=TOP[k];go('topic');$('#s-topic').innerHTML=`<button class="back" onclick="go('home')">‹ Inicio</button><h2>${i} ${k}</h2><div class="sub">${s}</div><div class="grid">${l.map((x,n)=>`<button class="tile" data-n="${n}"><b>${x[0]}</b><small>${x[1]}</small></button>`).join('')}</div>`;
+ document.querySelectorAll('#s-topic .tile').forEach(b=>b.onclick=()=>{go('chat');send(`Quiero ayuda con ${k}: ${l[b.dataset.n][0]}. Dame algo útil y pregúntame qué necesito.`)})}
+const sys=()=>`Eres VIERNES, asistente personal de IA. Hablas español, claro, cálido, directo y proactivo: anticipas lo siguiente que la persona necesita y propones el paso siguiente. Respuestas breves salvo que pidan detalle. Hoy es ${new Date().toLocaleString('es')}. Usuario: ${S.name||'desconocido'}.`+(S.mem&&S.memories.length?` Recuerdos del usuario: ${S.memories.join('; ')}.`:'');
+async function ai(contents){if(!S.key)throw Error('Falta tu clave de API. Agrégala en Ajustes.');
+ const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${S.model}:generateContent`,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':S.key},body:JSON.stringify({systemInstruction:{parts:[{text:sys()}]},contents})});
+ const j=await r.json();if(!r.ok)throw Error(j.error?.message||'Error de conexión');return j.candidates?.[0]?.content?.parts?.map(p=>p.text).join('')||'No pude responder.'}
+let tmr;
+function local(t){const x=t.toLowerCase().trim();let m;
+ if(/qué hora|que hora/.test(x))return'Son las '+new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'});
+ if(/qué día|que dia|fecha de hoy/.test(x))return'Hoy es '+new Date().toLocaleDateString('es',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ if(m=x.match(/recuerda que (.+)/)){S.memories.push(m[1]);save();return'Anotado en mi memoria: «'+m[1]+'».'}
+ if(/olvida todo|borra mi memoria/.test(x)){S.memories=[];save();return'Memoria borrada.'}
+ if(m=x.match(/(?:anota|nota:)\s*(.+)/)){S.notes.unshift(m[1]);save();return'Nota guardada.'}
+ if(m=x.match(/temporizador (?:de )?(\d+)\s*(segundo|minuto|hora)/)){timer(+m[1]*({segundo:1,minuto:60,hora:3600}[m[2]]));return`Temporizador de ${m[1]} ${m[2]}(s) en marcha.`}
+ if(m=x.match(/calcula\s+([\d+\-*/().,% x]+)/)){try{return'Resultado: '+calc(m[1].replace(/x/g,'*').replace(/,/g,'.'))}catch(e){}}
+ if(m=x.match(/abre (?:el |la |los )?(chat|estudio|juegos|deportes|coches|herramientas|ajustes|inicio)/)){const k=m[1];setTimeout(()=>TOP[k[0].toUpperCase()+k.slice(1)]?topic(k[0].toUpperCase()+k.slice(1)):go({ajustes:'settings',herramientas:'tools',inicio:'home'}[k]||k),300);return'Abriendo '+k+'.'}
+ return null}
+function calc(e){if(!/^[\d+\-*/().% ]+$/.test(e))throw 0;const r=Function('"use strict";return('+e+')')();if(!isFinite(r))throw 0;return +r.toFixed(8)}
+function timer(s){clearTimeout(tmr);tmr=setTimeout(()=>{toast('⏰ ¡Tiempo!');speak('Tu temporizador terminó');navigator.vibrate?.([300,150,300])},s*1000)}
+function chatView(){$('#mname').textContent=S.key?'Modelo: '+S.model:'Sin clave de API: ve a Ajustes';
+ $('#msgs').innerHTML=S.chat.length?'':'<div class="b a">Hola, soy VIERNES. Pregúntame lo que quieras, o prueba: «temporizador de 5 minutos», «recuerda que mi equipo es…», «calcula 12*8».</div>';
+ S.chat.forEach(m=>bubble(m.role=='user'?'u':'a',m.text));$('#msgs').scrollTop=1e9}
+function bubble(c,t){const d=document.createElement('div');d.className='b '+c;d.innerHTML=esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');$('#msgs').append(d);$('#msgs').scrollTop=1e9;return d}
+async function send(text){text=text.trim();if(!text)return'';if(!$('#s-chat').classList.contains('on'))go('chat');
+ bubble('u',text);S.chat.push({role:'user',text});let out;const l=local(text);
+ if(l!==null)out=l;else{const w=bubble('a','…');try{out=await ai(S.chat.slice(-20).map(m=>({role:m.role,parts:[{text:m.text}]})));w.remove()}catch(e){w.remove();out='⚠️ '+e.message;S.chat.pop();save();bubble('a',out);return out}}
+ S.chat.push({role:'model',text:out});S.chat=S.chat.slice(-60);save();bubble('a',out);speak(out);return out}
+$('#snd').onclick=()=>{const v=$('#inp').value;$('#inp').value='';send(v)};$('#inp').onkeydown=e=>{if(e.key=='Enter')$('#snd').click()};
+function speak(t){if(!S.voice||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[*_`#]/g,'').slice(0,600));u.lang='es-ES';speechSynthesis.speak(u)}
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec;
+$('#wave').innerHTML='<i></i>'.repeat(14);
+function voice(){go('voice');if(!SR){$('#vtxt').textContent='Voz no disponible';$('#vsub').textContent='Abre VIERNES en Chrome para usar el micrófono';return}
+ speechSynthesis?.cancel();rec=new SR();rec.lang='es-ES';rec.interimResults=false;
+ rec.onstart=()=>{$('#s-voice').classList.add('listening');$('#vtxt').textContent='Escuchando…';$('#vsub').textContent='Toca para cancelar'};
+ rec.onend=()=>{$('#s-voice').classList.remove('listening')};
+ rec.onerror=e=>{$('#vtxt').textContent='No te escuché';$('#vsub').textContent=e.error=='not-allowed'?'Permite el micrófono':'Intenta de nuevo'};
+ rec.onresult=async e=>{const t=e.results[0][0].transcript;$('#vtxt').textContent='«'+t+'»';$('#vsub').textContent='Pensando…';const r=await send(t);$('#vsub').textContent=r.slice(0,160)};
+ rec.start()}
+$('#mic').onclick=voice;$('#vbtn').onclick=()=>{try{rec?.abort()}catch(e){}voice()};
+const TOOLS=[['🧮','Calculadora','Rápida y sencilla'],['📝','Notas','Guarda tus ideas'],['⏱️','Temporizador','Enfócate en lo importante'],['🌐','Traductor','Sin barreras de idioma'],['💡','Generador de ideas','Inspírate y crea']];
+function tools(){$('#s-tools').innerHTML=`<h2>🧰 Herramientas</h2><div class="sub">Todo en un solo lugar</div><div class="list">${TOOLS.map((t,i)=>`<button class="tool" data-i="${i}"><span>${t[0]}</span><div><b>${t[1]}</b><small>${t[2]}</small></div></button>`).join('')}</div>`;
+ document.querySelectorAll('#s-tools .tool').forEach(b=>b.onclick=()=>tool(TOOLS[b.dataset.i][1]))}
+function tool(n){go('tool');const s=$('#s-tool');const head=`<button class="back" onclick="go('tools')">‹ Herramientas</button><h2>${n}</h2><div class="sub"></div>`;
+ if(n=='Calculadora'){s.innerHTML=head+`<input id="cd" readonly value="0" style="font-size:26px;text-align:right"><div class="calc">${'C ( ) /|7|8|9|*|4|5|6|-|1|2|3|+|0|.|⌫|='.replace('C ( ) /','C|(|)|/').split('|').map(k=>`<button>${k}</button>`).join('')}</div>`;
+  let v='';s.querySelectorAll('.calc button').forEach(b=>b.onclick=()=>{const k=b.textContent;if(k=='C')v='';else if(k=='⌫')v=v.slice(0,-1);else if(k=='='){try{v=String(calc(v))}catch(e){v='Error'}}else{if(v=='Error')v='';v+=k}$('#cd').value=v||'0'})}
+ if(n=='Notas'){const r=()=>{$('#nl').innerHTML=S.notes.map((x,i)=>`<div class="card row"><span>${esc(x)}</span><button class="back" data-d="${i}">✕</button></div>`).join('')||'<div class="sub">Aún no hay notas.</div>';document.querySelectorAll('#nl [data-d]').forEach(b=>b.onclick=()=>{S.notes.splice(b.dataset.d,1);save();r()})};
+  s.innerHTML=head+`<textarea id="nt" rows="3" placeholder="Escribe una nota"></textarea><button class="go" id="ns" style="margin:10px 0;width:100%">Guardar nota</button><div id="nl" class="list"></div>`;r();$('#ns').onclick=()=>{const v=$('#nt').value.trim();if(v){S.notes.unshift(v);save();$('#nt').value='';r()}}}
+ if(n=='Temporizador'){s.innerHTML=head+`<input id="tm" type="number" min="1" value="5" inputmode="numeric"><div class="sub" style="margin-top:6px">minutos</div><button class="go" id="ts" style="width:100%">Iniciar</button>`;$('#ts').onclick=()=>{timer(Math.max(1,+$('#tm').value)*60);toast('Temporizador iniciado')}}
+ if(n=='Traductor'||n=='Generador de ideas'){const tr=n=='Traductor';s.innerHTML=head+`<textarea id="ai1" rows="4" placeholder="${tr?'Texto y el idioma destino, ej: «hola» al inglés':'¿Sobre qué quieres ideas?'}"></textarea><button class="go" id="ai2" style="margin-top:10px;width:100%">${tr?'Traducir':'Generar ideas'}</button><div class="out card" id="ao" style="display:none"></div>`;
+  $('#ai2').onclick=async()=>{const o=$('#ao');o.style.display='block';o.textContent='…';try{o.textContent=await ai([{role:'user',parts:[{text:(tr?'Traduce y responde solo con la traducción: ':'Dame 6 ideas creativas y concretas sobre: ')+$('#ai1').value}]}])}catch(e){o.textContent='⚠️ '+e.message}}}}
+function settings(){$('#s-settings').innerHTML=`<h2>⚙️ Configuración</h2><div class="sub">Personaliza tu experiencia</div>
+<div class="list"><input id="sn" placeholder="Tu nombre" value="${esc(S.name)}"><input id="sk" type="password" placeholder="Clave API de Gemini" value="${esc(S.key)}"><input id="sm" placeholder="Modelo" value="${esc(S.model)}"></div>
+<div class="sub" style="margin-top:6px">Consigue tu clave gratis en aistudio.google.com/apikey. Se guarda solo en este dispositivo.</div>
+<label class="sw">Respuestas por voz<input type="checkbox" id="sv2" style="width:auto" ${S.voice?'checked':''}></label><label class="sw">Memoria<input type="checkbox" id="sme" style="width:auto" ${S.mem?'checked':''}></label>
+<div class="sub" style="margin-top:10px">Recuerdos: ${S.memories.length?esc(S.memories.join('; ')):'ninguno'}</div>
+<div class="bar"><button class="go" id="ss" style="flex:1">Guardar</button><button class="go" id="sc" style="background:#14305f">Borrar chat</button><button class="go" id="sa" style="background:#14305f">Acerca de</button></div>`;
+ $('#ss').onclick=()=>{S.name=$('#sn').value.trim();S.key=$('#sk').value.trim();S.model=$('#sm').value.trim()||'gemini-2.5-flash';S.voice=$('#sv2').checked;S.mem=$('#sme').checked;save();toast('Guardado')};
+ $('#sc').onclick=()=>{S.chat=[];save();toast('Chat borrado')};$('#sa').onclick=()=>go('about')}
+function about(){$('#s-about').innerHTML=`<button class="back" onclick="go('settings')">‹ Ajustes</button><div class="orb"><i></i><i></i><i></i><svg viewBox="0 0 100 100">${LOGO}</svg></div><h1>VIERNES</h1><div class="sub" style="text-align:center;margin-top:8px">Tu asistente de IA personal<br>Versión 1.0 · Hecho para ${esc(S.name||'ti')}<br><br>«No solo respondo, te acompaño en el camino hacia tus metas.»</div>`}
+setTimeout(()=>{$('#splash').style.opacity=0;setTimeout(()=>$('#splash').remove(),650)},1800);
+home();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>
